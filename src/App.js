@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import { useEffect, useState } from "react";
+// import axios from "axios";
+import { SocketContext, socket } from "./context/socket";
+import Child from "./components/Child";
 function App() {
+  const [time, setTime] = useState("fetching");
+  //
+  // useEffect(() => {
+  //   socket.on("connect", () => console.log(socket.id));
+  //   socket.on("connect_error", () => {
+  //     setTimeout(() => socket.connect(), 5000);
+  //   });
+  //
+  //   socket.on("time", (data) => setTime(data));
+  //   socket.on("disconnect", () => setTime("server disconnected"));
+  // }, []);
+
+  // const getTime = () => {
+  //   console.log("hit");
+  //   axios
+  //     .get("http://localhost:8080/v1/global/test")
+  //     .then((res) => {
+  //       setTime(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("ERR", err);
+  //     });
+  // };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SocketContext.Provider value={socket}>
+        <Child userId={"userID-123"} />
+      </SocketContext.Provider>
     </div>
   );
 }
